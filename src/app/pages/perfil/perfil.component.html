@@ -1,0 +1,108 @@
+<div class="row">
+
+    <!-- Formulario -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Perfil de usuario</h4>
+        <h6 class="card-subtitle">Ajustes</h6>
+
+        <form   [formGroup]="perfilForm"
+                (ngSubmit)=actualizarPerfil()
+                class="form p-t-20">
+
+            <div class="form-group">
+                <label for="exampleInputuname">User Name</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-user"></i></div>
+                    <input type="text"
+                            class="form-control"
+                            id="exampleInputuname"
+                            placeholder="Nombre de Usuario"
+                            formControlName="nombre"
+                            >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-email"></i></div>
+                    <input type="email"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            placeholder="Inserta el email"
+                            formControlName="email"
+                            [readOnly]="usuario.google">
+                </div>
+            </div>
+           <!--  <div class="form-group">
+                <label for="pwd1">Password</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-lock"></i></div>
+                    <input type="password" class="form-control" id="pwd1" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pwd2">Confirm Password</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-lock"></i></div>
+                    <input type="password" class="form-control" id="pwd2" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox checkbox-success">
+                    <input id="checkbox1" type="checkbox">
+                    <label for="checkbox1"> Remember me </label>
+                </div>
+            </div>-->
+            <button type="submit"
+                    class="btn btn-success btn-block waves-effect waves-light m-r-10"
+                    [disabled]="perfilForm.invalid"
+                    >
+                    <i class="fa fa-save"></i>
+                    Guardar cambios
+            </button>
+    <!--         <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
+     -->    </form>
+
+    </div>
+  </div>
+  </div>
+
+   <!-- Upload File -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Avatar</h4>
+        <h6 class="card-subtitle">Imagen del usuario</h6>
+
+        <div class="text-center mb-4">
+          <img  *ngIf="!imgTemp"
+                class="img-avatar"
+                [src]="usuario.imagenUrl"
+                alt="tu imagen de perfil">
+          <img  *ngIf="imgTemp"
+                class="img-avatar"
+                [src]="imgTemp"
+                alt="tu imagen de perfil">
+        </div>
+
+        <input type="file" (change)="cambiarImagen($event)">
+
+        <br>
+        <br>
+
+        <button type="button"
+                class="btn btn-success btn-block waves-effect waves-light m-r-10"
+                (click)="subirImagen()"
+                [disabled]="!imagenSubir"
+                >
+          <i class="fa fa-save"></i>
+          Cambiar imagen
+        </button>
+
+    </div>
+  </div>
+  </div>
+
+</div>
