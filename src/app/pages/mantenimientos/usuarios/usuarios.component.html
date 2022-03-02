@@ -1,0 +1,179 @@
+
+<!-- Barra búsqueda-->
+<div class="row animate fadeIn fast">
+  <div class="col-12">
+      <div class="card">
+          <div class="card-body">
+
+            <input  type="text"
+                    class="form-control"
+                    placeholder="Buscar Usuario..."
+                    (keyup)="buscar(txtTermino.value)"
+                    #txtTermino>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Tabla --> <!-- *ngIf="!cargando" OPCIONAL-->
+<div  class="row animated fadeIn fast" >
+<div class="col-12">
+  <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Total de usuarios ( {{ totalUsuarios }})</h4>
+          <h6 class="card-subtitle">Usuarios registrados en mi aplicación</h6>
+          <div class="table-responsive">
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th class="w100">Avatar</th>
+                          <th>Correo</th>
+                          <th>Nombre</th>
+                          <th class="w100">Role</th>
+                          <th class="w100">Auth</th>
+                          <th class="text-nowrap w100">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr *ngFor="let usuario of usuarios">
+                        <td class="text-center">
+                          <img  [src]="usuario.imagenUrl"
+                                alt="avatar usuario"
+                                class="avatar cursor"
+                                (click)="abrirModal(usuario)"
+                                >
+                              </td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.nombre }}</td>
+
+
+                        <td>
+                          <select class="form-control w140"
+                                  [(ngModel)]="usuario.role"
+                                  (change)="cambiarRole( usuario )">
+
+                              <option value="ADMIN_ROLE">Admin</option>
+                              <option value="USER_ROLE">User</option>
+                          </select>
+                        </td>
+
+
+
+                        <td class="text-center">
+                          <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                          <span *ngIf="!usuario.google" class="label label-info">Email</span>
+                        </td>
+
+                          <td class="text-nowrap text-center">
+<!--                               <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+ -->
+                              <a  (click)="eliminarUsuario( usuario )"
+                                  data-toggle="tooltip"
+                                  data-original-title="Borrar"
+                                  class="cursor"
+                                  >
+                                <i class="fa fa-close text-danger"></i>
+                              </a>
+                          </td>
+                      </tr>
+
+
+
+
+
+                      <!-- <tr>
+                          <td>Dream successful plan</td>
+                          <td>
+                              <div class="progress progress-xs margin-vertical-10 ">
+                                  <div class="progress-bar bg-warning" style="width: 50%; height:6px;"></div>
+                              </div>
+                          </td>
+                          <td>July 1, 2015</td>
+                          <td class="text-nowrap">
+                              <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                              <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Office automatization</td>
+                          <td>
+                              <div class="progress progress-xs margin-vertical-10 ">
+                                  <div class="progress-bar bg-success" style="width: 100%; height:6px;"></div>
+                              </div>
+                          </td>
+                          <td>Apr 12, 2015</td>
+                          <td class="text-nowrap">
+                              <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                              <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>The sun climbing plan</td>
+                          <td>
+                              <div class="progress progress-xs margin-vertical-10 ">
+                                  <div class="progress-bar bg-primary" style="width: 70%; height:6px;"></div>
+                              </div>
+                          </td>
+                          <td>Aug 9, 2015</td>
+                          <td class="text-nowrap">
+                              <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                              <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Open strategy</td>
+                          <td>
+                              <div class="progress progress-xs margin-vertical-10 ">
+                                  <div class="progress-bar bg-info" style="width: 85%; height:6px;"></div>
+                              </div>
+                          </td>
+                          <td>Apr 2, 2015</td>
+                          <td class="text-nowrap">
+                              <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                              <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Tantas earum numeris</td>
+                          <td>
+                              <div class="progress progress-xs margin-vertical-10 ">
+                                  <div class="progress-bar bg-inverse" style="width: 50%; height:6px;"></div>
+                              </div>
+                          </td>
+                          <td>July 11, 2015</td>
+                          <td class="text-nowrap">
+                              <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                              <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a>
+                          </td>
+                      </tr> -->
+                  </tbody>
+              </table>
+
+              <div *ngIf="txtTermino.value.length === 0">
+                <button  (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button>
+                &nbsp;
+                <button  (click)="cambiarPagina(+5)" class="btn btn-secondary">Siguiente</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+<!-- Loader -->
+<div *ngIf="cargando" class="row animate fadeIn fast">
+  <div class="col-12">
+
+      <div class="alert alert-success text-center">
+
+        <h4 class="alert-heading"> Cargando </h4>
+        <i class="fa fa-spin fa-refresh fa-2x"></i>
+        <p class="mb-0"> Por favor espere</p>
+      </div>
+
+  </div>
+</div>
+
